@@ -8,6 +8,41 @@ import 'package:netflix_clone/presentation/widgets/app_bar_widgets.dart';
 class ScreenDownload extends StatelessWidget {
   ScreenDownload({Key? key}) : super(key: key);
 
+  final _widgetList = [
+    const _SmartDownloads(),
+    Section2(),
+    const Section3(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(50),
+            child: AppBarWidgets(
+              title: "Downloads",
+            ),
+          ),
+          body: ListView.separated(
+            padding: const EdgeInsets.all(10),
+            itemBuilder: (ctx, index) {
+              return _widgetList[index];
+            },
+            separatorBuilder: (ctx, index) {
+              return const SizedBox(
+                height: 25,
+              );
+            },
+            itemCount: _widgetList.length,
+          )),
+    );
+  }
+}
+
+class Section2 extends StatelessWidget {
+  Section2({Key? key}) : super(key: key);
+
   final imagelist = [
     "https://www.themoviedb.org/t/p/w220_and_h330_face/sI9neTbF3ECdpf2MpC88EMGJH13.jpg",
     "https://www.themoviedb.org/t/p/w220_and_h330_face/5TYgKxYhnhRNNwqnRAKHkgfqi2G.jpg",
@@ -17,82 +52,122 @@ class ScreenDownload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: AppBarWidgets(
-              title: "Downloads",
+
+    return Column(
+      children: [
+        const Text(
+          "Introducing Download for You",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: kwhitecolour,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        kHeight,
+        const Text(
+          "We\"ll download a personalised selection of\n movies and shows for you, so there's \nalways something to watch on your \ndevice.",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.grey, fontSize: 16),
+        ),
+        kHeight,
+        SizedBox(
+          height: size.width,
+          width: size.width,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircleAvatar(
+                radius: size.width * 0.35,
+                backgroundColor: Colors.grey.withOpacity(0.6),
+              ),
+              DownloadsImageWidgets(
+                imagelist: imagelist[0],
+                margin: const EdgeInsets.only(left: 150, bottom: 20),
+                angle: 15,
+              ),
+              DownloadsImageWidgets(
+                imagelist: imagelist[1],
+                margin: const EdgeInsets.only(right: 150, bottom: 20),
+                angle: -15,
+              ),
+              DownloadsImageWidgets(
+                imagelist: imagelist[2],
+                margin: const EdgeInsets.only(bottom: 20),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class Section3 extends StatelessWidget {
+  const Section3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: MaterialButton(
+            color: kbuttonblue,
+            onPressed: () {},
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                "Set Up",
+                style: TextStyle(
+                  color: kbuttonwhite,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
-          body: ListView(
-            children: [
-              Row(
-                children: const [
-                  kWidth,
-                  Icon(
-                    Icons.settings,
-                    color: kwhitecolour,
-                  ),
-                  kWidth,
-                  Text("Smart Download"),
-                ],
-              ),
-              Text("Introducing Download for You"),
-              Text(
-                  "We\"ll download a personalised selection of movies and shows for you, so there's always something to watch on your device."),
-              Container(
-                height: size.width,
-                width: size.width,
-                color: Colors.white,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: size.width * 0.35,
-                    ),
-                    DownloadsImageWidgets(
-                      imagelist: imagelist[0],
-                      margin: EdgeInsets.only(left: 120, bottom: 20),
-                      angle: 20,
-                    ),
-                    DownloadsImageWidgets(
-                      imagelist: imagelist[1],
-                      margin: EdgeInsets.only(right: 120, bottom: 20),
-                      angle: -20,
-                    ),
-                    DownloadsImageWidgets(
-                      imagelist: imagelist[2],
-                      margin: EdgeInsets.only(bottom: 20),
-                    ),
-                  ],
-                ),
-              ),
-              MaterialButton(
-                color: kbuttonblue,
-                onPressed: () {},
-                child: const Text(
-                  "Set Up",
-                  style: TextStyle(
-                    color: kbuttonwhite,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              MaterialButton(
-                color: kbuttonwhite,
-                onPressed: () {},
-                child: const Text(
-                  "See what you can download",
-                  style: TextStyle(
-                      color: kblackcolour,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          )),
+        ),
+        kHeight,
+        MaterialButton(
+          color: kbuttonwhite,
+          onPressed: () {},
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              "See what you can download",
+              style: TextStyle(
+                  color: kblackcolour,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _SmartDownloads extends StatelessWidget {
+  const _SmartDownloads({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        kWidth,
+        Icon(
+          Icons.settings,
+          color: kwhitecolour,
+        ),
+        kWidth,
+        Text("Smart Download"),
+      ],
     );
   }
 }
@@ -116,11 +191,12 @@ class DownloadsImageWidgets extends StatelessWidget {
       angle: angle * pi / 180,
       child: Container(
         margin: margin,
-        height: size.width * 0.58,
-        width: size.width * 0.48,
+        height: size.width * 0.5,
+        width: size.width * 0.4,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
+            fit: BoxFit.fill,
             image: NetworkImage(
               imagelist,
             ),

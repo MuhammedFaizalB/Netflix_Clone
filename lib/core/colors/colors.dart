@@ -4,7 +4,7 @@ const backgroundcolour = Colors.black;
 
 const kwhitecolour = Colors.white;
 
-const kbuttonblue = Colors.blue;
+final kbuttonblue = Colors.blueAccent[700];
 
 const kbuttonwhite = Colors.white;
 
