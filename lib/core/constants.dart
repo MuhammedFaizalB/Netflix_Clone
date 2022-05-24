@@ -7,3 +7,7 @@ const kWidth = SizedBox(
 const kHeight = SizedBox(
   height: 10,
 );
+
+//Border Radius
+
+BorderRadius kRadius10 = BorderRadius.circular(10);
