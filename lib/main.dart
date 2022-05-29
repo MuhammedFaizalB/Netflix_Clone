@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Netflix Clone',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
         scaffoldBackgroundColor: backgroundcolour,
         primarySwatch: Colors.blue,
         fontFamily: GoogleFonts.montserrat().fontFamily,

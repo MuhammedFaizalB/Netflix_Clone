@@ -31,7 +31,7 @@ class ScreenHome extends StatelessWidget {
               child: Stack(
                 children: [
                   ListView(
-                    children: [
+                    children: const [
                       BackgroundCard(),
                       ListOfMovie(
                         title: "Released in the Past Year",
