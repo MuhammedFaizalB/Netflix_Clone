@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix_clone/application/downloads/downloads_bloc.dart';
+import 'package:netflix_clone/application/fast_laugh/fast_laugh_bloc.dart';
+import 'package:netflix_clone/application/search/search_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/domain/core/di/injectable.dart';
 import 'package:netflix_clone/presentation/main_page/widgets/screen_main_page.dart';
@@ -21,6 +23,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<DownloadsBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<SearchBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<FastLaughBloc>(),
         )
       ],
       child: MaterialApp(
