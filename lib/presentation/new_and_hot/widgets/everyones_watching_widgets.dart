@@ -4,9 +4,16 @@ import 'package:netflix_clone/presentation/home/widgets/custom_button_widgets.da
 import 'package:netflix_clone/presentation/widgets/video_widgets.dart';
 
 class EveryonesWatchingWidgets extends StatelessWidget {
+  final String posterPath;
+  final String movieName;
+  final String description;
+
   const EveryonesWatchingWidgets({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +21,25 @@ class EveryonesWatchingWidgets extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         kHeight,
-        const Text(
-          "Stranger Things",
-          style: TextStyle(
+        Text(
+          movieName,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
         kHeight,
-        const Text(
-          "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
-          style: TextStyle(
+        Text(
+          description,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
             color: Colors.grey,
           ),
         ),
         kHeight50,
-        const VideoWidgets(
-          image: tempEveryonesWatchingimage,
+        VideoWidgets(
+          image: posterPath,
         ),
         kHeight,
         Row(
