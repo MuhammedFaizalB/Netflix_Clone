@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/application/home/home_bloc.dart';
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presentation/home/widgets/background_card.dart';
 
@@ -13,6 +15,9 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<HomeBloc>(context).add(const GetHomeScreenData());
+    });
     return Scaffold(
       body: ValueListenableBuilder(
         valueListenable: scrollNotifier,
@@ -30,23 +35,74 @@ class ScreenHome extends StatelessWidget {
             child: SafeArea(
               child: Stack(
                 children: [
-                  ListView(
-                    children: const [
-                      BackgroundCard(),
-                      ListOfMovie(
-                        title: "Released in the Past Year",
-                      ),
-                      ListOfMovie(
-                        title: "Treading Now",
-                      ),
-                      NumberTitleCard(),
-                      ListOfMovie(
-                        title: "Tense Dramas",
-                      ),
-                      ListOfMovie(
-                        title: "South Indian Cinemas",
-                      ),
-                    ],
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        );
+                      } else if (state.hasError) {
+                        return const Center(
+                          child: Text("Error While Getting Data"),
+                        );
+                      }
+                      // releasedPastYear
+                      final _releasePastYear = state.pastYearMovieList.map((m) {
+                        return '$imageAppendUrl${m.posterPath}';
+                      }).toList();
+                      _releasePastYear.shuffle();
+
+                      // trending
+                      final _trending = state.trendingMovieList.map((m) {
+                        return '$imageAppendUrl${m.posterPath}';
+                      }).toList();
+                      _trending.shuffle();
+
+                      // tenseDramas
+                      final _tenseDramas = state.tenseDramaMovieList.map((m) {
+                        return '$imageAppendUrl${m.posterPath}';
+                      }).toList();
+                      _tenseDramas.shuffle();
+
+                      // southIndian
+                      final _southIndian = state.southIndianMovieList.map((m) {
+                        return '$imageAppendUrl${m.posterPath}';
+                      }).toList();
+                      _southIndian.shuffle();
+
+                      // Top 10 TV Shows
+                      final _top10TvShows = state.trendingTvList.map((t) {
+                        return '$imageAppendUrl${t.posterPath}';
+                      }).toList();
+
+                      //List View
+                      return ListView(
+                        children: [
+                          const BackgroundCard(),
+                          ListOfMovie(
+                            title: "Released in the Past Year",
+                            posterList: _releasePastYear,
+                          ),
+                          ListOfMovie(
+                            title: "Treading Now",
+                            posterList: _trending,
+                          ),
+                          NumberTitleCard(
+                            posterList: _top10TvShows,
+                          ),
+                          ListOfMovie(
+                            title: "Tense Dramas",
+                            posterList: _tenseDramas,
+                          ),
+                          ListOfMovie(
+                            title: "South Indian Cinemas",
+                            posterList: _southIndian,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                   scrollNotifier.value == true
                       ? AnimatedContainer(

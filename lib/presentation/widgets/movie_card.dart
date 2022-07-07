@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/constants.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({
-    Key? key,
-  }) : super(key: key);
+  final String imageUrl;
+  const MovieCard({Key? key, required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +14,10 @@ class MovieCard extends StatelessWidget {
         width: 130,
         decoration: BoxDecoration(
           borderRadius: kRadius10,
-          image: const DecorationImage(
+          image: DecorationImage(
             fit: BoxFit.fill,
             image: NetworkImage(
-              "https://www.themoviedb.org/t/p/w220_and_h330_face/7qop80YfuO0BwJa1uXk1DXUUEwv.jpg",
+              imageUrl,
             ),
           ),
         ),

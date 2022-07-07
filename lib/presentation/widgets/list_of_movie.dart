@@ -7,9 +7,11 @@ class ListOfMovie extends StatelessWidget {
   const ListOfMovie({
     Key? key,
     required this.title,
+    required this.posterList,
   }) : super(key: key);
 
   final String title;
+  final List<String> posterList;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class ListOfMovie extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: List.generate(
               10,
-              (index) => const MovieCard(),
+              (index) => MovieCard(
+                imageUrl: posterList[index],
+              ),
             ),
           ),
         )
